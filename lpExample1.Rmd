@@ -1,0 +1,27 @@
+---
+title: "Production Costs - Question 1"
+output: html_notebook
+---
+
+
+```{r}
+library("lpSolveAPI")
+x <- read.lp("Question1.lp")
+x
+```
+```{r}
+solve(x)
+get.objective(x)
+```
+```{r}
+get.dual.solution(x)
+get.sensitivity.rhs(x)
+```
+```{r}
+get.variables(x)
+```
+```{r}
+get.constraints(x)
+```
+
+
