@@ -1,0 +1,24 @@
+---
+title: "Assignment 2 - Question 5"
+output: html_notebook
+---
+
+
+
+```{r}
+library("lpSolveAPI")
+x <- read.lp("Question5.lp")
+x
+```
+```{r}
+solve(x)
+get.objective(x)
+```
+```{r}
+get.constraints(x)
+```
+```{r}
+get.variables(x)
+```
+
+
