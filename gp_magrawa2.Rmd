@@ -1,0 +1,27 @@
+---
+title: "Goal Programming"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library("lpSolveAPI")
+x <- read.lp("GoalProgram.lp")
+x
+```
+
+
+```{r cars}
+solve(x)
+get.objective(x)
+```
+
+
+```{r pressure, echo=FALSE}
+get.constraints(x)
+```
+
+
+```{r}
+get.variables(x)
+```
+

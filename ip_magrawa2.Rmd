@@ -1,0 +1,206 @@
+---
+title: "Integer Programming"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library("lpSolveAPI")
+x <- read.lp("IntegerProgram.lp")
+x
+```
+
+```{r cars}
+solve(x)
+get.objective(x)
+```
+
+```{r pressure, echo=FALSE}
+get.constraints(x)
+get.variables(x)
+```
+
+```{r}
+library("lpSolveAPI")
+y <- read.lp("ip1.lp")
+y
+```
+
+```{r}
+solve(y)
+get.objective(y)
+```
+
+```{r}
+get.constraints(y)
+get.variables(y)
+```
+
+```{r}
+library("lpSolveAPI")
+z <- read.lp("ip2.lp")
+z
+```
+
+```{r}
+solve(z)
+get.objective(z)
+```
+
+```{r}
+get.constraints(z)
+get.variables(z)
+```
+
+```{r}
+library("lpSolveAPI")
+a <- read.lp("ip3.lp")
+a
+```
+
+```{r}
+solve(a)
+get.objective(a)
+```
+
+```{r}
+get.constraints(a)
+get.variables(a)
+```
+
+```{r}
+library("lpSolveAPI")
+b <- read.lp("ip4.lp")
+b
+```
+
+```{r}
+solve(b)
+get.objective(b)
+```
+
+```{r}
+get.constraints(b)
+get.variables(b)
+```
+
+```{r}
+library("lpSolveAPI")
+c <- read.lp("ip5.lp")
+c
+```
+
+```{r}
+solve(c)
+get.objective(c)
+```
+
+```{r}
+get.constraints(c)
+get.variables(c)
+```
+
+```{r}
+library("lpSolveAPI")
+d <- read.lp("ip6.lp")
+d
+```
+
+```{r}
+solve(d)
+get.objective(d)
+```
+
+```{r}
+get.constraints(d)
+get.variables(d)
+```
+
+```{r}
+library("lpSolveAPI")
+e <- read.lp("ip7.lp")
+e
+```
+
+```{r}
+solve(e)
+get.objective(e)
+```
+
+```{r}
+get.constraints(e)
+get.variables(e)
+```
+
+```{r}
+library("lpSolveAPI")
+f <- read.lp("ip8.lp")
+f
+```
+
+```{r}
+solve(f)
+get.objective(f)
+```
+
+```{r}
+get.constraints(f)
+get.variables(f)
+```
+
+```{r}
+library("lpSolveAPI")
+g <- read.lp("ip9.lp")
+g
+```
+
+```{r}
+solve(g)
+get.objective(g)
+```
+
+```{r}
+get.constraints(g)
+get.variables(g)
+```
+
+```{r}
+library("lpSolveAPI")
+h <- read.lp("ip10.lp")
+h
+```
+
+```{r}
+solve(h)
+get.objective(h)
+```
+
+```{r}
+get.constraints(h)
+get.variables(h)
+```
+
+```{r}
+library(data.tree)
+
+integerprogram <- Node$new("X1 = 3.75, X2 = 2.25, Z = 41.25")
+
+branch1 <- integerprogram$AddChild("Branch and Bound X1")
+ip1 <- branch1$AddChild("For X1 <= 3 :- X1 = 3, X2 = 3, Z = 39")
+ip2 <- branch1$AddChild("For X1 >= 4 :- X1 = 4, X2 = 1.8, Z = 41")
+subbranch1 <- ip2$AddChild("Branch and Bound X2")
+ip3 <- subbranch1$AddChild("For X2 <= 1 :- X1 = 4.44, X2 = 1, Z = 40.56")
+subbranch2 <- ip3$AddChild("Branch and Bound X1")
+ip5 <- subbranch2$AddChild("For X1 <= 4 :- X1 = 4, X2 = 1, Z = 37")
+ip6 <- subbranch2$AddChild("For X1 >= 5 :- X1 = 5, X2 = 0, Z = 40")
+ip4 <- subbranch1$AddChild("For X2 >= 2 :- X1 = 3.75, X2 = 2.25, Z = 41.25")
+
+branch2 <- integerprogram$AddChild("Branch and Bound X2")
+ip7 <- branch2$AddChild("For X2 <= 2 :- X1 = 3.88, X2 = 2, Z = 41.11")
+subbranch3 <- ip7$AddChild("Branch and Bound X1")
+ip9 <- subbranch3$AddChild("For X1 <= 3 :- X1 = 3, X2 = 3, Z = 39")
+ip10 <- subbranch3$AddChild("For X1 >= 4 :- X1 = 4, X2 = 1.8, Z = 41")
+ip8 <- branch2$AddChild("For X2 >= 3 :- X1 = 3, X2 = 3, Z = 39")
+
+print(integerprogram)
+```
+
