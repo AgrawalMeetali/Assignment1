@@ -1,0 +1,9 @@
+Model,Inefficient ID,Peer1,Peer2,Peer3,L1,L2,L3,L4,L5,L6
+FDH,All efficient,NA,NA,NA,NA,NA,NA,NA,NA,NA
+CRS,5,1,2,4,0.2,0.08,0,0.54,0,0
+CRS,6,1,2,4,0.34,0.4,0,0.13,0,0
+VRS,6,1,2,5,0.4,0.34,0,0,0.26,0
+IRS,6,1,2,5,0.4,0.34,0,0,0.26,0
+DRS,5,1,2,4,0.2,0.08,0,0.54,0,0
+DRS,6,1,2,4,0.34,0.4,0,0.13,0,0
+FRH,All efficient,NA,NA,NA,NA,NA,NA,NA,NA,NA
