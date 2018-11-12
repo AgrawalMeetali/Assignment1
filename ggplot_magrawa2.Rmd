@@ -1,13 +1,7 @@
 ---
-title: "Metaheuristics"
+title: "GG-Plot"
 output: html_document
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-# Load Libraries
 
 ```{r}
 library(GenSA)
@@ -16,7 +10,6 @@ library(GA)
 library(dplyr)
 ```
 
-# Portfolio Optimization
 
 ```{r}
 library("quantmod")
@@ -46,7 +39,6 @@ obj <- function(w) {
 }
 ```
 
-# Using GenSA for Simulated Annealing
 
 ```{r}
 set.seed(1234)
@@ -62,65 +54,17 @@ rbind(tickers, round(100 * wstar.GenSA, 2))
 100 * (sum(wstar.GenSA * mu) - mean(mu))
 ```
 
-# Rastrigin function
-
-```{r}
-Rastrigin <- function(x1, x2)
-{
-  20 + x1^2 + x2^2 - 10*(cos(2*pi*x1) + cos(2*pi*x2))
-}
-
-x1 <- x2 <- seq(-5.12, 5.12, by = 0.1)
-f <- outer(x1, x2, Rastrigin)
-persp3D(x1, x2, f, theta = 50, phi = 20, color.palette = bl2gr.colors)
-```
-
-# Using GA for Genetic Algorithm
-
 ```{r}
 gap <- ga(type = "real-valued",fitness=function(w) -obj(w),lower=rep(0,5), upper=rep(1,5), popSize = 50, maxiter = 100)
 summary(gap)
 plot(gap)
 ```
 
-# Comparing GA and SA performance
-
-```{r}
-result <- matrix(c( 0.10,21.42,29.17,21.39,8.91,19.11,-0.042,0.012,0.008,0.469,0.439,0.371),nrow=6,ncol=2)
-colnames(result) <- c("Simulated Annealing","Genetic Algorithm")
-rownames(result) <- c("Fitness function value","x1","x2","x3","x4","x5")
-result
-```
-
-
-
-
-# Question 2 - Optimal parameters for regression 
-
 ```{r}
 X <- c(61,63,67,69,70,74,76,81,86,91,95,97)
 Y <- c(4.28,4.08,4.42,4.17,4.48,4.3,4.82,4.7,5.11,5.13,5.64,5.56)
 k <- data.frame(X = c(61,63,67,69,70,74,76,81,86,91,95,97),Y = c(4.28,4.08,4.42,4.17,4.48,4.3,4.82,4.7,5.11,5.13,5.64,5.56))
 
-fun = function(x,y) { (sin(10*x)*cos(10*y)+2)/sqrt(x^4+y^4+1) } 
-obj = function(z)
-{
- fn.call <<- fn.call + 1
- SSYY=sum((Y-mean(Y))^2)
- SSXY=sum((X-mean(X))*(Y-mean(Y)))
- SSX=sum((X-mean(X))^2)
- b1= SSXY/SSX
- b0=mean(Y)-b1*mean(X)
- Y_Estimated=X*b1+b0
- Residuals= Y-Y_Estimated
- SSE=sum((Residuals -mean(Residuals))^2)
- out <- SSE
- return(out)
-}
-```
-
-
-```{r}
 regression <- function(a,b)
 {
   sum(Y - (a + b*X))^2
@@ -130,8 +74,6 @@ robj <- function(m)
   regression(m[1],m[2])
 }
 ```
-
-# Using GenSA
 
 ```{r}
 set.seed(1234)
@@ -145,36 +87,11 @@ b1SA <- out.GenSA$par[2]
 cat("GenSA call functions", fn.call.GenSA, "times.\n")
 ```
 
-# Using GA
-
 ```{r}
 gap <- ga(type = "real-valued", fitness=function(x) -robj(x), lower=rep(0,2), upper=rep(5,2), popSize = 50, maxiter = 100)
 summary(gap)
 plot(gap)
-```
-
-# Plot for Regression
-
-```{r}
-x=seq(-5,5,length=50)
-y=seq(-5,5,length=50) 
-z=outer(x,y,fun) 
- persp3D(x, y, z, phi = 0, theta = 45,
-  xlab = "X", ylab = "Y",
-  main = "Optimal Parameters for Regression",
-  color.palette = bl2gr.colors
-)
-filled.contour(x, y, z, color.palette = bl2gr.colors)
-```
-
-# Optimal Regression line
-
-```{r}
-plot(X,Y,xlim=c(60, 100),xlab="Number of Passengers", ylab="Cost ($1000)", col="blue")
-abline(lsfit(X, Y),col = "red")
-
-```
-
+``````
 
 ```{r}
 abc <- ggplot(data=k,aes(x=X,y=Y)) + geom_point()
