@@ -1,0 +1,13 @@
+name: Final_Shiny
+title: Final_Shiny
+username:
+account: magrawal
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 611540
+bundleId: 1752125
+url: https://magrawal.shinyapps.io/Final_Shiny/
+when: 1544423420.81831
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData|BasicStatistics.R|cars.csv|DEA.csv|DEA.Rmd|DEA_magrawa2.html|DEA_magrawa2.Rmd|DEA1.lp|FirstStagePGP.lp|ggplot_magrawa2.html|ggplot_magrawa2.Rmd|GoalProgram.lp|gp_magrawa2.html|gp_magrawa2.Rmd|informs.lp|Informs_final.Rmd|IntegerProgram.lp|IP.R|ip_magrawa2.html|ip_magrawa2.Rmd|ip1.lp|ip10.lp|ip2.lp|ip3.lp|ip4.lp|ip5.lp|ip6.lp|ip7.lp|ip8.lp|ip9.lp|lpExample1.nb.html|lpExample1.Rmd|Metaheuristics_magrawa2.html|Metaheuristics_magrawa2.Rmd|PP_magrawa2(4).nb.html|PP_magrawa2(4).Rmd|PP_magrawa2(5).nb.html|PP_magrawa2(5).Rmd|Question1.lp|Question4.lp|Question5.lp|README.md|SecondStagePGP.lp

@@ -1,0 +1,152 @@
+---
+title: "Group Project - INFORMS"
+output: html_document
+---
+
+Since the data had multiple Dealers, VDC's and Plants, we selected 2 Plants, 2 Dealers and 5 VDC's as a sample to work on.
+Plant 1 - RO, Plant 2 - 3A
+Dealer 1 - 15534, Dealer 2 - 16070
+Shipping source - Autonomous Vehicles, Trucks
+5 VDC - BE DO GU OX QT
+
+Our objective is to minimize the total cost of shipping.
+The optimized resulted value will be the sum of, cost of shipping and the number of different shipping sources.
+
+```{r}
+library(dplyr)
+library(sf)
+library(lwgeom)
+```
+
+
+#Calculating distance between Plant1 and VDC 1-5
+```{r}
+df <- data.frame(latitude = c(21.73,19.9,21.92,23.46,19.84,25.38),
+                longitude = c(171.69,169.95,171.93,-150.69,170.25,-150.67))
+
+#Converting to sf(special features) object
+df_sf <- st_as_sf(df, coords = c("longitude", "latitude"))
+
+#Set the projection as ESPG 4326 (Geodetic cordinate system for the world)
+st_crs(df_sf) <- 4326
+
+#Apply the st_distance function to get distance between 2 geometries 
+dist_m <- st_distance(df_sf)
+
+#Combine with df
+df2 <- df %>% mutate(`RO-RO` = as.numeric(dist_m[,1]), 
+                   `RO-VDC1` = as.numeric(dist_m[,2]),
+                   `RO-VDC2` = as.numeric(dist_m[,3]),
+                   `RO-VDC3` = as.numeric(dist_m[,4]),
+                   `RO-VDC4` = as.numeric(dist_m[,5]),
+                   `RO-VDC5` = as.numeric(dist_m[,6]))
+         
+df2 #in meters
+df2/1610
+```
+The distance between Plant RO and VDC BE DO GU OX QT are 169 20 2399 160 2392 miles.
+
+
+#Calculating distance between VDC 1-5 and Dealer1
+```{r}
+df <- data.frame(latitude = c(19.78,19.9,21.92,23.46,19.84,25.38),                                                       longitude = c(160.99,169.95,171.93,-150.69,170.25,-150.67))
+
+df_sf <- st_as_sf(df, coords = c("longitude", "latitude"))
+
+st_crs(df_sf) <- 4326
+
+dist_m <- st_distance(df_sf)
+
+df2 <- df %>% mutate(`D1-D1` = as.numeric(dist_m[,1]), 
+                   `D1-VDC1` = as.numeric(dist_m[,2]),
+                   `D1-VDC2` = as.numeric(dist_m[,3]),
+                   `D1-VDC3` = as.numeric(dist_m[,4]),
+                   `D1-VDC4` = as.numeric(dist_m[,5]),
+                   `D1-VDC5` = as.numeric(dist_m[,6]))
+
+df2/1610
+```
+The distance between Dealer 15534 and VDC BE DO GU OX QT are 583 722 3104 602 3095 miles.
+
+
+#Calculating distance between Plant2 and VDC 1-5
+```{r}
+df <- data.frame(latitude = c(32.48,19.9,21.92,23.46,19.84,25.38),
+                longitude = c(-178.36,169.95,171.93,-150.69,170.25,-150.67))
+
+df_sf <- st_as_sf(df, coords = c("longitude", "latitude"))
+
+st_crs(df_sf) <- 4326
+
+dist_m <- st_distance(df_sf)
+
+df2 <- df %>% mutate(`3A-3A` = as.numeric(dist_m[,1]), 
+                   `3A-VDC1` = as.numeric(dist_m[,2]),
+                   `3A-VDC2` = as.numeric(dist_m[,3]),
+                   `3A-VDC3` = as.numeric(dist_m[,4]),
+                   `3A-VDC4` = as.numeric(dist_m[,5]),
+                   `3A-VDC5` = as.numeric(dist_m[,6]))
+
+df2/1610
+```
+The distance between Plant 3A and VDC BE DO GU OX QT are 1128 940 1795 1119 1741 miles.
+
+
+#Calculating distance between VDC 1-5 and Dealer2
+```{r}
+df <- data.frame(latitude = c(20.16,19.9,21.92,23.46,19.84,25.38), 
+                longitude = c(172.83,169.95,171.93,-150.69,170.25,-150.67))
+
+df_sf <- st_as_sf(df, coords = c("longitude", "latitude"))
+
+st_crs(df_sf) <- 4326
+
+dist_m <- st_distance(df_sf)
+
+df2 <- df %>% mutate(`D2-D2` = as.numeric(dist_m[,1]), 
+                   `D2-VDC1` = as.numeric(dist_m[,2]),
+                   `D2-VDC2` = as.numeric(dist_m[,3]),
+                   `D2-VDC3` = as.numeric(dist_m[,4]),
+                   `D2-VDC4` = as.numeric(dist_m[,5]),
+                   `D2-VDC5` = as.numeric(dist_m[,6]))
+
+df2/1610
+```
+The distance between Dealer 16070 and VDC BE DO GU OX QT are 188 134 2348 169 2348 miles.
+
+
+#Calculating total cost
+Given data for Autonomous Vehicles:
+$0.55 - cost/mile per car
+$40 - hadling cost per car
+Formula for calculating cost of AV's = 
+[((Distance from Plant1 to VDC1 + Distance from VDC1 to Dealer1)*cost/mile) + handling cost]*Q111
+
+Given data for Trucks:
+Each load can carry max 10 trucks (0.1)
+$4 - cost/mile per load
+$50 - hadling cost per truck
+$200 - fixed cost 
+Formula for calculating cost of Trucks = 
+[((Distance from Plant1 to VDC1 + Distance from VDC1 to Dealer1)*cost/mile*0.1) + (fixed cost*0.1) + handling cost]*T111
+
+
+```{r}
+library(lpSolveAPI)
+x <- read.lp("informs.lp")
+x
+```
+
+```{r}
+solve(x)
+get.objective(x)
+```
+According to the demand of each plant-dealer pair, the smallest cost of shipping and operating will be $95038.
+
+
+```{r}
+get.variables(x)
+```
+The results shows the best shiping patch of this combination of plants and dealers. 
+
+Q121=4, T121=144, Q221=7, T221=10, Q122=148, Q222=7 and T222=10. 
