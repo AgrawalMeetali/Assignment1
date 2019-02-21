@@ -1,8 +1,10 @@
 ---
-title: "GG-Plot"
+title: "Metaheuristics with GG-Plot representation"
 output: html_document
 ---
 
+
+#Load libraries
 ```{r}
 library(GenSA)
 library(ggplot2)
@@ -11,6 +13,7 @@ library(dplyr)
 ```
 
 
+#Portfolio Optimization
 ```{r}
 library("quantmod")
 tickers <- c("GE", "IBM", "GOOG", "AMZN", "AAPL")
@@ -40,6 +43,7 @@ obj <- function(w) {
 ```
 
 
+#Solve using GenSA for Simulated Annealing
 ```{r}
 set.seed(1234)
 fn.call <<- 0
@@ -54,12 +58,16 @@ rbind(tickers, round(100 * wstar.GenSA, 2))
 100 * (sum(wstar.GenSA * mu) - mean(mu))
 ```
 
+
+#Solve using GA for Genetic Algorithm
 ```{r}
 gap <- ga(type = "real-valued",fitness=function(w) -obj(w),lower=rep(0,5), upper=rep(1,5), popSize = 50, maxiter = 100)
 summary(gap)
 plot(gap)
 ```
 
+
+#Regression function
 ```{r}
 X <- c(61,63,67,69,70,74,76,81,86,91,95,97)
 Y <- c(4.28,4.08,4.42,4.17,4.48,4.3,4.82,4.7,5.11,5.13,5.64,5.56)
@@ -75,6 +83,8 @@ robj <- function(m)
 }
 ```
 
+
+#SA function using GenSA
 ```{r}
 set.seed(1234)
 fn.call <<- 0
@@ -87,12 +97,16 @@ b1SA <- out.GenSA$par[2]
 cat("GenSA call functions", fn.call.GenSA, "times.\n")
 ```
 
+
+#GA function using ga
 ```{r}
 gap <- ga(type = "real-valued", fitness=function(x) -robj(x), lower=rep(0,2), upper=rep(5,2), popSize = 50, maxiter = 100)
 summary(gap)
 plot(gap)
 ``````
 
+
+#GG-Plot for Regression, SA and GA functions
 ```{r}
 abc <- ggplot(data=k,aes(x=X,y=Y)) + geom_point()
 abc <- abc + geom_abline(aes(intercept = b0SA, slope = b1SA, colour = "SA")) +

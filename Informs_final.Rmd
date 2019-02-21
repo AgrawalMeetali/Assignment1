@@ -141,7 +141,7 @@ x
 solve(x)
 get.objective(x)
 ```
-According to the demand of each plant-dealer pair, the smallest cost of shipping and operating will be $95038.
+According to the demand of each plant-dealer pair, the result here gives us the smallest cost of shipping and operating which will be $95038.
 
 
 ```{r}
@@ -149,4 +149,7 @@ get.variables(x)
 ```
 The results shows the best shiping patch of this combination of plants and dealers. 
 
-Q121=4, T121=144, Q221=7, T221=10, Q122=148, Q222=7 and T222=10. 
+Q121=4, T121=140 : This shows VDC2-DO would be best for shipping between Plant1-RO and Dealer1-15534 (4 by AV, 140 by truck)
+Q221=7, T221=10 : This shows VDC2-DO would be best for shipping between Plant2-3A and Dealer1-15534 (7 by AV, 10 by truck)
+Q122=148 : This shows VDC2-DO would be best for shipping between Plant1-RO and Dealer2-16070 (All 148 by AV)
+Q222=7, T222=10 : This shows VDC2-DO would be best for shipping between Plant2-3A and Dealer2-16070 (7 by AV, 10 by truck)

@@ -3,9 +3,11 @@ title: "Data Envelopment Analysis"
 output: html_document
 ---
 
+
 ```{r}
 library(Benchmarking)
 ```
+
 
 ```{r}
 input <- matrix(c(150,400,320,520,350,320,0.2,0.7,1.2,2.0,1.2,0.7),ncol = 2)
@@ -16,6 +18,7 @@ input
 output
 ```
 
+
 ```{r}
 el <- dea(input,output,RTS = "crs")
 el
@@ -23,9 +26,11 @@ peers(el)
 lambda(el)
 ```
 
+
 ```{r}
 dea.plot.frontier(input,output,RTS = "crs")
 ```
+
 
 ```{r}
 em <- dea(input,output,RTS = "vrs")
@@ -34,9 +39,11 @@ peers(em)
 lambda(em)
 ```
 
+
 ```{r}
 dea.plot.frontier(input,output,RTS = "vrs")
 ```
+
 
 ```{r}
 en <- dea(input,output,RTS = "irs")
@@ -45,9 +52,11 @@ peers(en)
 lambda(en)
 ```
 
+
 ```{r}
 dea.plot.frontier(input,output,RTS = "irs")
 ```
+
 
 ```{r}
 eo <- dea(input,output,RTS = "drs")
@@ -56,9 +65,11 @@ peers(eo)
 lambda(eo)
 ```
 
+
 ```{r}
 dea.plot.frontier(input,output,RTS = "drs")
 ```
+
 
 ```{r}
 ep <- dea(input,output,RTS = "fdh+")
@@ -67,9 +78,11 @@ peers(ep)
 lambda(ep)
 ```
 
+
 ```{r}
 dea.plot.frontier(input,output,RTS = "fdh+")
 ```
+
 
 ```{r}
 eq <- dea(input,output,RTS = "fdh")
@@ -78,12 +91,8 @@ peers(eq)
 lambda(eq)
 ```
 
-```{r}
-dea.plot.frontier(input,output,RTS = "fdh")
-```
 
 ```{r}
-table <- read.csv("C:/Users/Meetali/Documents/Assignments/DEA.csv")
-table
+dea.plot.frontier(input,output,RTS = "fdh")
 ```
 
